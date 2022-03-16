@@ -8,7 +8,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 
-@Service
+@Service("ProducerService")
 public class ProducerService {
 
   private final KafkaTemplate<String, String> kafkaTemplate;
