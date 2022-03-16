@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import spring.kafak.service.ConsumerService;
 import spring.kafak.service.ProducerService;
 
+/**
+ * todo1 : kafka 써보면서 재밌을만한 로직들 구상하면서 endpoint 붙여보기
+ * todo2: node-sqs-message-action project랑 브로드캐스팅 해볼 것.
+ */
 @RestController("KafkaController")
 public class KafkaController {
 
