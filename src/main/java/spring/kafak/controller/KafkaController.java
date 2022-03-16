@@ -22,10 +22,15 @@ import spring.kafak.service.ProducerService;
 public class KafkaController {
 
   @Resource(name = "ConsumerService")
-  private ConsumerService consumerService;
+  private final ConsumerService consumerService;
 
   @Resource(name = "ProducerService")
-  private ProducerService producerService;
+  private final ProducerService producerService;
+
+  KafkaController(ConsumerService consumerService, ProducerService producerService) {
+    this.consumerService = consumerService;
+    this.producerService = producerService;
+  }
 
   @PostMapping(value = "/publish")
   public void publishKafka(HttpServletRequest request, HttpServletResponse response,
