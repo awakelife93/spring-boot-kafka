@@ -1,4 +1,4 @@
-# Spring - Kafka
+# Spring Boot - Kafka
 ##### Author 박현우
 ##### Create Date 2022.03.15
 #
