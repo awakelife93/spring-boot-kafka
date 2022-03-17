@@ -19,7 +19,7 @@ public class Producer {
       SendResult<String, String> sendResult = this.kafkaTemplate.send(topic, message).get();
       return sendResult.getRecordMetadata().offset();
     } catch (InterruptedException | ExecutionException exception) {
-      // exception 하나 만들기
+      // todo: exception 하나 만들기
       throw new Exception();
     }
   }
