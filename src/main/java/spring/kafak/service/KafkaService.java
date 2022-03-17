@@ -11,8 +11,8 @@ public class KafkaService {
 
   private final Producer producer;
 
-  public String publisher(String topic, String message) {
-    producer.sendMessage(topic, message);
-    return "completed send message";
+  public String publisher(String topic, String message) throws Exception {
+    long offset = producer.sendMessage(topic, message);
+    return "completed send message= " + message + "offset= " + offset;
   }
 }
