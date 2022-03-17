@@ -12,9 +12,7 @@ public class KafkaService {
   private final Producer producer;
 
   public String publisher(String topic, String message) {
-    final String ok = "ok";
     producer.sendMessage(topic, message);
-
-    return ok;
+    return "completed send message";
   }
 }

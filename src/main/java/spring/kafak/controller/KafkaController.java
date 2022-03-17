@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,14 @@ public class KafkaController {
   @PostMapping(value = "/publish")
   public String publishKafka(HttpServletRequest request, HttpServletResponse response,
       @RequestBody Map<String, Object> body) throws Exception {
-    return "hi";
+
+    String topic = (String) body.get("topic");
+    // todo: 단순 string이나, string 배열일 때 각각 로직 개발하자.
+    String message = (String) body.get("messages");
+    String result = kafkaService.publisher(topic, message);
+
+    response.setStatus(HttpStatus.OK.value());
+    return result;
   }
 
   @GetMapping(value = "/subscribe")
