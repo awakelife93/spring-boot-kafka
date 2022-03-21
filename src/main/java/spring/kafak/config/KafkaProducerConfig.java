@@ -12,14 +12,11 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
-@RequiredArgsConstructor
 public class KafkaProducerConfig {
 
-  @Value("{kafka.bootstrapAddress}")
-  private final String bootstrapAddress;
+  @Value("${kafka.bootstrapAddress}")
+  private String bootstrapAddress;
 
   @Bean
   public ProducerFactory<String, String> producerFactory() {

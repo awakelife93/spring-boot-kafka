@@ -13,17 +13,14 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
-@RequiredArgsConstructor
 public class KafkaConsumerConfig {
 
-  @Value("{kafka.bootstrapAddress}")
+  @Value("${kafka.bootstrapAddress}")
   private String bootstrapAddress;
 
-  @Value("{kafka.groupId}")
-  private final String groupId;
+  @Value("${kafka.groupId}")
+  private String groupId;
 
   @Bean
   public ConsumerFactory<String, String> consumerFactory() {
