@@ -37,12 +37,16 @@ public class KafkaController {
   }
 
   @PostMapping(value = "/subscribeStart")
-  public void startSubscribe(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String startSubscribe(HttpServletRequest request, HttpServletResponse response) throws Exception {
     kafkaService.subscribeStart();
+    response.setStatus(HttpStatus.OK.value());
+    return "Consumer Start!!";
   }
 
   @PostMapping(value = "/subscribeStop")
-  public void stopSubscribe(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String stopSubscribe(HttpServletRequest request, HttpServletResponse response) throws Exception {
     kafkaService.SubscribeStop();
+    response.setStatus(HttpStatus.OK.value());
+    return "Consumer Stop!!";
   }
 }
