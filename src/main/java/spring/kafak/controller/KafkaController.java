@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +24,7 @@ public class KafkaController {
   private final KafkaService kafkaService;
 
   @PostMapping(value = "/publish")
-  public String publishKafka(HttpServletRequest request, HttpServletResponse response,
+  public String publish(HttpServletRequest request, HttpServletResponse response,
       @RequestBody Map<String, Object> body) throws Exception {
 
     String topic = (String) body.get("topic");
@@ -37,8 +36,13 @@ public class KafkaController {
     return result;
   }
 
-  @GetMapping(value = "/subscribe")
-  public void subscribeKafka(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    // todo: 개발 해야함
+  @PostMapping(value = "/subscribeStart")
+  public void startSubscribe(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    kafkaService.subscribeStart();
+  }
+
+  @PostMapping(value = "/subscribeStop")
+  public void stopSubscribe(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    kafkaService.SubscribeStop();
   }
 }
