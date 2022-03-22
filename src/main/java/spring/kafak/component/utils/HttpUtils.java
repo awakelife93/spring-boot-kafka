@@ -1,4 +1,4 @@
-package spring.kafak.utils;
+package spring.kafak.component.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,19 +9,20 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HttpUtils {
 
-  public static HttpURLConnection generateRequest(String url, String method, String token) throws IOException {
+  public static HttpURLConnection generateRequest(String url, String method) throws IOException {
     URL endpoint = new URL(url);
     HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
 
     // https://stackoverflow.com/questions/25163131/httpurlconnection-invalid-http-method-patch
-    if (method.equals("PATCH") || method.equals("PUT")) {
+    if (method.equals(HttpMethod.PATCH.name()) || method.equals(HttpMethod.PUT.name())) {
       connection.setRequestProperty("X-HTTP-Method-Override", method);
-      method = "POST";
+      method = HttpMethod.POST.name();
     }
 
     connection.setRequestMethod(method);
@@ -29,7 +30,6 @@ public class HttpUtils {
     connection.setDoOutput(true);
     connection.setRequestProperty("Cache-Control", "no-cache");
     connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-    connection.setRequestProperty("authorization", token);
     return connection;
   }
 
