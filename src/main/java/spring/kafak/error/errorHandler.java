@@ -5,6 +5,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @RestControllerAdvice
-public class errorHandler {
+public class ErrorHandler {
 
 }
