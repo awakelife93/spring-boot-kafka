@@ -1,5 +1,7 @@
 package spring.kafak.service;
 
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,13 @@ public class KafkaService {
 
   private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
-  public String publisher(String topic, String message) throws Exception {
-    long offset = producer.sendMessage(topic, message);
-    return "completed send message= " + message + " offset= " + offset;
+  public String publisher(String topic, String message) throws InterruptedException, ExecutionException {
+    try {
+      long offset = producer.sendMessage(topic, message);
+      return "completed send message= " + message + " offset= " + offset;
+    } catch (InterruptedException | ExecutionException exception) {
+      throw exception;
+    }
   }
 
   public void subscribeStart() {

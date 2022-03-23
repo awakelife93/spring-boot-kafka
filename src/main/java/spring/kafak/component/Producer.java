@@ -14,13 +14,13 @@ public class Producer {
 
   private final KafkaTemplate<String, String> kafkaTemplate;
 
-  public long sendMessage(String topic, String message) throws Exception {
+  public long sendMessage(String topic, String message) throws InterruptedException, ExecutionException {
     try {
       SendResult<String, String> sendResult = this.kafkaTemplate.send(topic, message).get();
       return sendResult.getRecordMetadata().offset();
     } catch (InterruptedException | ExecutionException exception) {
-      // todo: exception 하나 만들기
-      throw new Exception();
+      System.out.println("sendMessage" + exception);
+      throw exception;
     }
   }
 }

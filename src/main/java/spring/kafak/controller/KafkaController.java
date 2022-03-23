@@ -1,6 +1,7 @@
 package spring.kafak.controller;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,15 +26,18 @@ public class KafkaController {
 
   @PostMapping(value = "/publish")
   public String publish(HttpServletRequest request, HttpServletResponse response,
-      @RequestBody Map<String, Object> body) throws Exception {
+      @RequestBody Map<String, Object> body) throws InterruptedException, ExecutionException {
+    try {
+      String topic = (String) body.get("topic");
+      // todo: 단순 string이나, string 배열일 때 각각 로직 개발하자.
+      String message = (String) body.get("messages");
+      String result = kafkaService.publisher(topic, message);
 
-    String topic = (String) body.get("topic");
-    // todo: 단순 string이나, string 배열일 때 각각 로직 개발하자.
-    String message = (String) body.get("messages");
-    String result = kafkaService.publisher(topic, message);
-
-    response.setStatus(HttpStatus.OK.value());
-    return result;
+      response.setStatus(HttpStatus.OK.value());
+      return result;
+    } catch (InterruptedException | ExecutionException exception) {
+      throw exception;
+    }
   }
 
   @PostMapping(value = "/subscribeStart")

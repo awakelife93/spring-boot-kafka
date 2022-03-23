@@ -47,11 +47,9 @@ public class Consumer {
 
       System.out.println("============>" + response.get("data"));
     } catch (UnsupportedEncodingException exception) {
-      // todo: exception 하나 만들기
-      System.out.println("UnsupportedEncodingException " + exception);
+      System.out.println("sendMessageToActionServer UnsupportedEncodingException " + exception);
     } catch (IOException exception) {
-      // todo: exception 하나 만들기
-      System.out.println("IOException " + exception);
+      System.out.println("sendMessageToActionServer IOException " + exception);
     }
 
   }
