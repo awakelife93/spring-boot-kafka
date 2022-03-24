@@ -47,11 +47,15 @@ public class KafkaController {
       @RequestBody Map<String, Object> body) throws InterruptedException, ExecutionException {
     try {
       String topic = body.get("topic") == null ? this.topic : (String) body.get("topic");
-      List<String> messages = (List<String>) body.get("messages");
       List<String> result = new ArrayList<String>();
 
-      for (String message : messages) {
-        result.add(kafkaService.publisher(topic, message));
+      if (body.get("messages") instanceof ArrayList<?>) {
+        for (Object message : (ArrayList<?>) body.get("messages")) {
+          if (message instanceof String) {
+            String _message = (String) message;
+            result.add(kafkaService.publisher(topic, _message));
+          }
+        }
       }
 
       return result;
