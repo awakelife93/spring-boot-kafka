@@ -1,5 +1,7 @@
 package spring.kafak.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -16,7 +18,6 @@ import spring.kafak.service.KafkaService;
 
 /**
  * todo1 : kafka 써보면서 재밌을만한 로직들 구상하면서 endpoint 붙여보기
- * todo2: node-sqs-message-action project랑 브로드캐스팅 해볼 것.
  */
 @RestController
 @RequiredArgsConstructor
@@ -24,16 +25,35 @@ public class KafkaController {
 
   private final KafkaService kafkaService;
 
-  @PostMapping(value = "/publish")
-  public String publish(HttpServletRequest request, HttpServletResponse response,
+  private final String topic = "tokenStorage";
+
+  @PostMapping(value = "/publishSingleMessage")
+  public String publishSingleMessage(HttpServletRequest request, HttpServletResponse response,
       @RequestBody Map<String, Object> body) throws InterruptedException, ExecutionException {
     try {
-      String topic = (String) body.get("topic");
-      // todo: 단순 string이나, string 배열일 때 각각 로직 개발하자.
-      String message = (String) body.get("messages");
+      String topic = body.get("topic") == null ? this.topic : (String) body.get("topic");
+      String message = (String) body.get("message");
       String result = kafkaService.publisher(topic, message);
 
       response.setStatus(HttpStatus.OK.value());
+      return result;
+    } catch (InterruptedException | ExecutionException exception) {
+      throw exception;
+    }
+  }
+
+  @PostMapping(value = "/publishMultipleMessages")
+  public List<String> publishMultipleMessages(HttpServletRequest request, HttpServletResponse response,
+      @RequestBody Map<String, Object> body) throws InterruptedException, ExecutionException {
+    try {
+      String topic = body.get("topic") == null ? this.topic : (String) body.get("topic");
+      List<String> messages = (List<String>) body.get("messages");
+      List<String> result = new ArrayList<String>();
+
+      for (String message : messages) {
+        result.add(kafkaService.publisher(topic, message));
+      }
+
       return result;
     } catch (InterruptedException | ExecutionException exception) {
       throw exception;
