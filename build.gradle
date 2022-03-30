@@ -18,6 +18,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.6.4'
     implementation 'org.springframework.kafka:spring-kafka:2.8.3'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.6.4'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.10'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.15'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.4'
     testImplementation 'org.springframework.kafka:spring-kafka-test:2.8.3'
     
