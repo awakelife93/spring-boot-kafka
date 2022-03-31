@@ -8,6 +8,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 
 import lombok.RequiredArgsConstructor;
 import spring.kafak.component.utils.HttpUtils;
@@ -24,16 +25,21 @@ public class Consumer {
   }
 
   private void sendMessageToActionServer(String message) {
-    System.out.println("Send Message To Action Server : " + message);
-    Map<String, Object> response = new HashMap<String, Object>();
+    try {
+      System.out.println("Send Message To Action Server : " + message);
+      Map<String, Object> response = new HashMap<String, Object>();
 
-    // todo: domain 관리 어떻게 할지 고민
-    final String actionServerAddress = "http://localhost:5005/deleteUserToken";
-    MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+      // todo: domain 관리 어떻게 할지 고민
+      final String actionServerAddress = "http://localhost:5005/deleteUserToken";
+      MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
-    parameters.add("params", message);
+      parameters.add("params", message);
 
-    response = httpUtils.request(HttpMethod.POST, actionServerAddress, parameters);
-    System.out.println("============>" + response.get("data"));
+      response = httpUtils.request(HttpMethod.POST, actionServerAddress, parameters);
+      System.out.println("============>" + response.get("data"));
+    } catch (RestClientException exception) {
+      System.out.println("RestClientException : " + exception.getMessage());
+      throw exception;
+    }
   }
 }
