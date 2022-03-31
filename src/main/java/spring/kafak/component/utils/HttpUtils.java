@@ -1,57 +1,34 @@
 package spring.kafak.component.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class HttpUtils {
 
-  public static HttpURLConnection generateRequest(String url, String method) throws IOException {
-    URL endpoint = new URL(url);
-    HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
+  private final RestTemplate restTemplate;
 
-    // https://stackoverflow.com/questions/25163131/httpurlconnection-invalid-http-method-patch
-    if (method.equals(HttpMethod.PATCH.name()) || method.equals(HttpMethod.PUT.name())) {
-      connection.setRequestProperty("X-HTTP-Method-Override", method);
-      method = HttpMethod.POST.name();
-    }
+  public Map<String, Object> request(HttpMethod method, String url, MultiValueMap<String, String> body) {
+    final HttpHeaders headers = new HttpHeaders();
+    final HttpEntity<Object> entity = new HttpEntity<>(body, headers);
+    final ResponseEntity<Map<String, Object>> exchangeResponse = restTemplate.exchange(
+        url,
+        method,
+        entity,
+        new ParameterizedTypeReference<Map<String, Object>>() {
+        });
 
-    connection.setRequestMethod(method);
-    connection.setDoInput(true);
-    connection.setDoOutput(true);
-    connection.setRequestProperty("Cache-Control", "no-cache");
-    connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-    return connection;
-  }
-
-  public static String generateResponse(HttpURLConnection request) throws IOException {
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()));
-    StringBuffer stringBuffer = new StringBuffer();
-    String inputLine;
-
-    while ((inputLine = bufferedReader.readLine()) != null) {
-      stringBuffer.append(inputLine);
-    }
-    bufferedReader.close();
-
-    String _response = stringBuffer.toString();
-    return _response;
-  }
-
-  public static String send(HashMap<String, Object> apiResponse, HttpServletResponse response) {
-    int status = (int) apiResponse.get("status");
-    String jsonString = (String) apiResponse.get("data");
-
-    response.setStatus(status);
-    return jsonString;
+    return exchangeResponse.getBody();
   }
 }
