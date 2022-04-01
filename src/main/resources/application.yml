@@ -1,3 +1,5 @@
 kafka:
   bootstrapAddress: localhost:9092
   groupId: tokenA
+endpoint:
+  deleteUserToken: http://localhost:5005/deleteUserToken
