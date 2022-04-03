@@ -18,15 +18,19 @@ public class KafkaProducerConfig {
   @Value("${kafka.bootstrapAddress}")
   private String bootstrapAddress;
 
-  @Bean
-  public ProducerFactory<String, String> producerFactory() {
+  private Map<String, Object> generateProducerConfig() {
     Map<String, Object> config = new HashMap<String, Object>();
 
     config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapAddress);
     config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-    return new DefaultKafkaProducerFactory<>(config);
+    return config;
+  }
+
+  @Bean
+  public ProducerFactory<String, String> producerFactory() {
+    return new DefaultKafkaProducerFactory<>(generateProducerConfig());
   }
 
   @Bean
