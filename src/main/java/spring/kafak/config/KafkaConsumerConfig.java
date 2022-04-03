@@ -21,8 +21,7 @@ public class KafkaConsumerConfig {
   @Value("${kafka.groupId}")
   private String groupId;
 
-  @Bean
-  public ConsumerFactory<String, String> consumerFactory() {
+  private Map<String, Object> generateConsumerConfig() {
     Map<String, Object> config = new HashMap<String, Object>();
 
     config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapAddress);
@@ -30,7 +29,12 @@ public class KafkaConsumerConfig {
     config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
     config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 
-    return new DefaultKafkaConsumerFactory<>(config);
+    return config;
+  }
+
+  @Bean
+  public ConsumerFactory<String, String> consumerFactory() {
+    return new DefaultKafkaConsumerFactory<>(generateConsumerConfig());
   }
 
   @Bean
