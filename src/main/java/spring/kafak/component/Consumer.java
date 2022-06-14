@@ -17,11 +17,13 @@ import spring.kafak.component.utils.HttpUtils;
 @Component
 @RequiredArgsConstructor
 public class Consumer {
+  
   private final HttpUtils httpUtils;
 
   @Value("${endpoint.deleteUserToken}")
   private String deleteUserTokenEndPoint;
 
+  // todo: 컨테이너 확장.
   @KafkaListener(id = "tokenContainer", topics = "tokenStorage", groupId = "${kafka.groupId}", autoStartup = "false")
   public void listenMessage(String message) {
     System.out.println("Received Message : " + message);
