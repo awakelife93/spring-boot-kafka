@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.MessageListenerContainer;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class KafkaConsumerConfig {
 
   @Value("${kafka.bootstrapAddress}")
@@ -20,6 +25,10 @@ public class KafkaConsumerConfig {
 
   @Value("${kafka.groupId}")
   private String groupId;
+
+  private final String consumerContainerId = "tokenContainer";
+
+  private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
   private Map<String, Object> generateConsumerConfig() {
     Map<String, Object> config = new HashMap<String, Object>();
@@ -42,6 +51,12 @@ public class KafkaConsumerConfig {
     ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
     return factory;
+  }
+
+  @Bean
+  public MessageListenerContainer messageListenerContainer() {
+    // * consumer는 일단 1개만... 만들어서 사용 중
+    return kafkaListenerEndpointRegistry.getListenerContainer(consumerContainerId);
   }
 
 }

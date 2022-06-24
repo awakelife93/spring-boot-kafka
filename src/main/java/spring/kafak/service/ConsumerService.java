@@ -1,6 +1,5 @@
 package spring.kafak.service;
 
-import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.stereotype.Service;
 
@@ -10,52 +9,41 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ConsumerService {
 
-  private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-  
-  // todo: 추후 컨테이너별로 확장.
-  private final String consumerContainerId = "tokenContainer";
+  private final MessageListenerContainer messageListenerContainer;
 
   public Boolean start() {
-    MessageListenerContainer container = kafkaListenerEndpointRegistry.getListenerContainer(consumerContainerId);
-
-    if(container.isRunning()) {
+    if (messageListenerContainer.isRunning()) {
       return false;
     }
-    
-    container.start();
+
+    messageListenerContainer.start();
     return true;
   }
 
   public Boolean stop() {
-    MessageListenerContainer container = kafkaListenerEndpointRegistry.getListenerContainer(consumerContainerId);
-    
-    if(!container.isRunning()) {
+    if (!messageListenerContainer.isRunning()) {
       return false;
     }
 
-    container.stop();
+    messageListenerContainer.stop();
     return true;
   }
 
   public Boolean pause() {
-    MessageListenerContainer container = kafkaListenerEndpointRegistry.getListenerContainer(consumerContainerId);
-    
-    if(container.isContainerPaused()) {
+    if (messageListenerContainer.isContainerPaused()) {
       return false;
     }
 
-    container.pause();
+    messageListenerContainer.pause();
     return true;
   }
 
   public Boolean resume() {
-    MessageListenerContainer container = kafkaListenerEndpointRegistry.getListenerContainer(consumerContainerId);
-    
-    if(!container.isContainerPaused()) {
+    if (!messageListenerContainer.isContainerPaused()) {
       return false;
     }
 
-    container.resume();
+    messageListenerContainer.resume();
     return true;
   }
 }
