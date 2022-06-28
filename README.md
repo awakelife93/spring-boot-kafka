@@ -1,4 +1,4 @@
-# Spring Boot - Kafka
+# SpringBoot-Kafka
 #### Publishing Message -> Kafka -> Subscribe & Send To Message Action Server
 ##### Author 박현우
 ##### Create Date 2022.03.15
