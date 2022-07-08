@@ -1,4 +1,4 @@
-package spring.kafak.config;
+package com.awakelife93.kafka.config;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package spring.kafak.controller;
+package com.awakelife93.kafka.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,8 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.awakelife93.kafka.service.ConsumerService;
+
 import lombok.RequiredArgsConstructor;
-import spring.kafak.service.ConsumerService;
 
 @RestController
 @RequiredArgsConstructor

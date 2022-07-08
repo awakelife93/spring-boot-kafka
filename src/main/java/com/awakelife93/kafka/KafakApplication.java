@@ -1,4 +1,4 @@
-package spring.kafak;
+package com.awakelife93.kafka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

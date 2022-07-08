@@ -1,4 +1,6 @@
-package spring.kafak.service;
+package com.awakelife93.kafka.service;
+
+import javax.annotation.Nullable;
 
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.stereotype.Service;
@@ -9,10 +11,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ConsumerService {
 
-  private final MessageListenerContainer messageListenerContainer;
+  @Nullable private final MessageListenerContainer messageListenerContainer;
 
   public Boolean start() {
-    if (messageListenerContainer.isRunning()) {
+    if (messageListenerContainer != null && messageListenerContainer.isRunning()) {
       return false;
     }
 
@@ -21,7 +23,7 @@ public class ConsumerService {
   }
 
   public Boolean stop() {
-    if (!messageListenerContainer.isRunning()) {
+    if (messageListenerContainer != null && !messageListenerContainer.isRunning()) {
       return false;
     }
 
@@ -30,7 +32,7 @@ public class ConsumerService {
   }
 
   public Boolean pause() {
-    if (messageListenerContainer.isContainerPaused()) {
+    if (messageListenerContainer != null && messageListenerContainer.isContainerPaused()) {
       return false;
     }
 
@@ -39,7 +41,7 @@ public class ConsumerService {
   }
 
   public Boolean resume() {
-    if (!messageListenerContainer.isContainerPaused()) {
+    if (messageListenerContainer != null &&  !messageListenerContainer.isContainerPaused()) {
       return false;
     }
 

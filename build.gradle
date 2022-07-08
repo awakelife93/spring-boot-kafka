@@ -29,7 +29,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
 
-group = 'spring'
+group = 'com.awakelife93'
 version = '0.0.1-SNAPSHOT'
 description = 'kafak'
 java.sourceCompatibility = JavaVersion.VERSION_15

@@ -1,4 +1,4 @@
-package spring.kafak.component;
+package com.awakelife93.kafka.component;
 
 import java.util.concurrent.ExecutionException;
 

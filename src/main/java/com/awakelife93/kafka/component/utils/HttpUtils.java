@@ -1,4 +1,4 @@
-package spring.kafak.component.utils;
+package com.awakelife93.kafka.component.utils;
 
 import java.util.Map;
 

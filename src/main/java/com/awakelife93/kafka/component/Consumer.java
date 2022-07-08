@@ -1,4 +1,4 @@
-package spring.kafak.component;
+package com.awakelife93.kafka.component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +11,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 
+import com.awakelife93.kafka.component.utils.HttpUtils;
+
 import lombok.RequiredArgsConstructor;
-import spring.kafak.component.utils.HttpUtils;
 
 @Component
 @RequiredArgsConstructor

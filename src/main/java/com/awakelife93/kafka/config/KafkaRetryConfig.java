@@ -1,4 +1,4 @@
-package spring.kafak.config;
+package com.awakelife93.kafka.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.retry.support.RetryTemplate;
 public class KafkaRetryConfig {
 
   @Bean
-  private RetryTemplate retryTemplate() {
+  public RetryTemplate retryTemplate() {
     RetryTemplate retryTemplate = new RetryTemplate();
     // 재시도시 1초 후에 재 시도하도록 backoff delay 시간을 설정한다.
     FixedBackOffPolicy fixedBackOffPolicy = new FixedBackOffPolicy();

@@ -1,4 +1,4 @@
-package spring.kafak.controller;
+package com.awakelife93.kafka.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.awakelife93.kafka.service.ProducerService;
+
 import lombok.RequiredArgsConstructor;
-import spring.kafak.service.ProducerService;
 
 @RestController
 @RequiredArgsConstructor

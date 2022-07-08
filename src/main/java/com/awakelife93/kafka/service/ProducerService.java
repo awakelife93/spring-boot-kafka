@@ -1,11 +1,12 @@
-package spring.kafak.service;
+package com.awakelife93.kafka.service;
 
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.stereotype.Service;
 
+import com.awakelife93.kafka.component.Producer;
+
 import lombok.RequiredArgsConstructor;
-import spring.kafak.component.Producer;
 
 @Service
 @RequiredArgsConstructor

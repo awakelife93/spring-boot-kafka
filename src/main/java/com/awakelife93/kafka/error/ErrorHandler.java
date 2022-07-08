@@ -1,4 +1,4 @@
-package spring.kafak.error;
+package com.awakelife93.kafka.error;
 
 import java.util.Date;
 import java.util.HashMap;
